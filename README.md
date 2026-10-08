@@ -1,2 +1,3 @@
 # MERN-FULL-STACK-INTERNSHIP
-Developing a Registration page UI
+Day 3
+Frontend Navigation and View Switching
