@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>JavaScript Practice</title>
-</head>
+const loginView = document.getElementById("view-login");
+const registrationView = document.getElementById("view-registration");
 
-<body>
+const showRegister = document.getElementById("show-register");
+const showLogin = document.getElementById("show-login");
 
-    <h1>Hello</h1>
+showRegister.addEventListener("click", function(event) {
+   event.preventDefault();
 
-    <script src="script.js"></script>
-</body>
-</html>
+   loginView.classList.add("hidden");
+   registrationView.classList.remove("hidden");
+});
+
+showLogin.addEventListener("click",function(event) {
+    event.preventDefault();
+
+    registrationView.classList.add("hidden");
+    loginView.classList.remove("hidden");
+});
+
