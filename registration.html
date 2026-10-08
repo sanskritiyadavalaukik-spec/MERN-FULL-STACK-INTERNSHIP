@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-card">
+        <h1>Registration</h1>
+        <form>
+            <div class="field">
+                <label for="first-name">First Name</label>
+                <input
+                 class="form-input"
+                 id="first-name"
+                 name="firstName"
+                 type="text"
+                 placeholder="Enter your first name"
+                 required
+                 >
+            </div>
+
+            <div class="field">
+                <label for="last-name">Last Name</label>
+                <input
+                  class="form-input"
+                  id="last-name"
+                  name="lastName"
+                  type="text"
+                  placeholder="Enter your last name"
+                  required
+                  >
+            </div>
+
+            <div class="field">
+                <label for="date-of-birth">Date of Birth</label>
+                <input
+                class="form-input"
+                id="date-of-birth"
+                name="dateOfBirth"
+                type="date"
+                required
+                >
+
+            </div>
+
+            <div class="field">
+                <label>Gender</label>
+                <label>
+                    <input type="radio"name="gender"value="male"required>
+                    Male
+                </label>
+
+                <label>
+                    <input type="radio"name="gender"value="female"required>
+                    Female
+                </label>
+
+                <label>
+                    <input type="radio"name="gender"value="other"required>
+                    Other
+                </label>
+            </div>
+
+            <div class="field">
+                <label for="reg-email">Email</label>
+                <input
+                  class="form-input"
+                  id="reg-email"
+                  name="email"
+                  type="reg-email"
+                  placeholder="Enter your email"
+                  required
+                  >
+            </div>
+
+            <div class="field">
+                    <label for="reg-password">Password</label>
+                    <input
+                      class="form-input"
+                      id="reg-password"
+                      name="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      required
+                      >
+                  </div>
+
+                  <div class="field">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input
+                      class="form-input"
+                      id="confirm-password"
+                      name="confirm-password"
+                      type="password"
+                      placeholder="Confirm your password"
+                      required>
+                  </div>
+
+                  <button type="submit"class="btn">Register</button>
+        </form>
+        <p class="switch-page">
+            Already have an account?
+            <a href="login.html">Login</a>
+        </p>
+    </main>
+    
+</body>
+</html>
