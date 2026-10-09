@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #fff0f6;
+    color: #333;   
+}
+
+.dashboard-container{
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 230px;
+    background-color: #f4a6c1;
+    color: #333;
+    padding: 25px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h2{
+    margin-bottom: 35px;
+    font-size: 22px;   
+}
+
+.sidebar nav a,
+.logout{
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.sidebar nav a:hover,
+.sidebar nav .active{
+    background-color: #ffe0eb;
+}
+
+.logout{
+    margin-top: auto;
+}
+
+.main-content {
+    flex: 1;
+    padding: 35px;   
+}
+
+.welcome{
+    margin-bottom: 30px;
+}
+
+.welcome h1{
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.welcome p{
+    color: #666;
+}
+
+.stats{
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0,1fr));
+   gap: 20px; 
+}
+
+.stat-card{
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card p{
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff4081;
+}
+
+@media (max-width: 600px){
+    .dashboard-container{
+        flex-direction: column;
+    }
+
+    .sidebar{
+        width: 100%;
+    }
+
+    .sidebar nav {
+        display: flex;
+        gap: 10px;
+    }
+
+    .sidebar nav a{
+        flex: 1;
+    }
+
+    .logout{
+        margin-top: 10px;
+    }
+}
