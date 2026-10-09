@@ -44,7 +44,7 @@
 
     <section id="view-registration"class="view hidden">
        <h1>Registration</h1>
-        <form>
+        <form data-form="registration" novalidate>
             <div class="field">
                 <label for="first-name">First Name</label>
                 <input
@@ -108,7 +108,9 @@
                   type="email"
                   placeholder="Enter your email"
                   required
+                  aria-describedby="reg-email-error"
                   >
+                  <p id="reg-email-error" class="error" aria-live="polite"></p>
             </div>
 
             <div class="field">
@@ -120,7 +122,9 @@
                       type="password"
                       placeholder="Enter your password"
                       required
+                      aria-describedby="reg-password-error"
                       >
+                      <p id="reg-password-error" class=aria-live="polite"></p>
                   </div>
 
                   <div class="field">
@@ -131,7 +135,10 @@
                       name="confirm-password"
                       type="password"
                       placeholder="Confirm your password"
-                      required>
+                      required
+                      aria-describedby="confirm-password-error"
+                      >
+                      <p id="confirm-password-error" class="error" aria-live="polite"></p>
                   </div>
 
                   <button type="submit"class="btn">Register</button>
