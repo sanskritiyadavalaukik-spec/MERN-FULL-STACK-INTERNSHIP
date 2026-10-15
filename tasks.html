@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4b287d">
+  <title>My tasks</title>
+  <link rel="stylesheet" href="tasks.css">
+
+</head>
+
+<body>
+
+  <div class="task-container">
+
+    <aside class="sidebar">
+
+      <a class="brand-mark" href="dashboard.html">
+         
+      </a>
+
+      <p class="nav-label">WORKSPACE</p>
+
+      <nav aria-label="Main navigation">
+        <a href="dashboard.html">
+          <span>▦</span>
+           Overview
+          </a>
+
+          <a href="tasks.html" 
+          class="active" 
+          aria-current="page">
+          <span>✓</span>
+           My tasks
+          </a>
+        </nav>
+
+
+      <div class="sidebar-bottom">
+        <p>Keep showing up.
+          <br>'
+          <strong>Progress adds up.</strong>
+        </p>
+        <a href="loginpage.html" class="logout">↗ Sign out</a>
+      
+      </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">YOUR WORKSPACE</p>
+          <h1>My tasks</h1>
+          <p class="subheading">
+            Small steps count. Here's what's on your list.
+          </p>
+        </diav>
+
+        <button class="add-button" 
+        id="add-task" type="button">
+        <span>＋</span> 
+        Add task
+      </button>
+    
+    </header>
+
+
+      <section class="task-toolbar" 
+      aria-label="Task filters">
+      <p>
+        <strong id="task-count">3 tasks</strong> 
+        <span>in your list</span>
+      </p>
+      <div class="filters">
+
+        <button class="filter-button 
+        active" type="button" 
+        data-filter="all">All</button>
+
+        <button class="filter-button" 
+        type="button" 
+        data-filter="pending">To do</button>
+
+        <button class="filter-button" 
+        type="button" 
+        data-filter="completed">Completed</button>
+      
+      </div>
+    </section>
+
+
+      <section class="task-list" 
+      id="task-list" aria-label="Tasks">
+        <article class="task-card" 
+        data-status="pending">
+        <div class="task-card-top">
+          <span class="task-category">INTERNSHIP</span>
+
+          <span class="status pending">To do</span>
+        
+        </div>
+
+
+        <h2>Complete Day 6 UI</h2>
+        <p>Create a task list page using HTML and CSS.</p>
+        <div class="task-card-bottom">
+          <span class="task-date">Focus task</span>
+          <button type="button" 
+          class="complete-button">Mark complete</button>
+        
+        </div>
+      
+      </article>
+
+
+        <article class="task-card" 
+        data-status="completed">
+        <div class="task-card-top">
+          <span class="task-category">LEARNING</span>
+          <span class="status completed">Completed</span>
+        </div>
+        
+        <h2>Review CSS Grid</h2>
+        
+        <p>Practise arranging cards in a clean, responsive layout.</p>
+        <div class="task-card-bottom">
+          <span class="task-date">Practice</span>
+          <button type="button" class="complete-button" disabled>
+            Completed ✓
+          </button>
+        
+        </div>
+      
+      </article>
+
+
+
+        <article class="task-card" 
+        data-status="pending">
+        <div class="task-card-top">
+          <span class="task-category">PROJECT</span>
+          <span class="status pending">To do</span>
+        </div>
+        <h2>Update GitHub repository</h2>
+        
+        <p>Review the finished interface before sharing the project.</p>
+
+        <div class="task-card-bottom">
+          <span class="task-date">Project upkeep</span>
+          <button type="button" class="complete-button">Mark complete</button>
+        </div>
+
+      </article>
+
+
+      </section>
+
+
+
+      <p class="empty-state" id="empty-state" hidden>
+        No tasks in this view. Try another filter or add a new task.</p>
+      <footer class="page-footer">
+        Studio Space 
+        <span>·</span> 
+        A workspace for steady progress
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script>
+    const taskList = document.getElementById("task-list");
+
+    const taskCount = document.getElementById("task-count");
+
+    const emptyState = document.getElementById("empty-state");
+
+    let activeFilter = "all";
+
+
+
+    function refreshTasks() {
+
+      const cards = Array.from(taskList.querySelectorAll(".task-card"));
+
+      let visibleCount = 0;
+
+      cards.forEach(function(card) {
+
+        const show = activeFilter === "all" || card.dataset.status === activeFilter;
+        card.hidden = !show;
+
+        if (show) visibleCount++;
+      });
+
+
+      taskCount.textContent = cards.length + (cards.length === 1 ? " task" : " tasks");
+      emptyState.hidden = visibleCount !== 0;
+    }
+
+    document.querySelectorAll(".filter-button").forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        activeFilter = button.dataset.filter;
+
+        document.querySelectorAll(".filter-button").forEach(function(item) {
+
+          item.classList.toggle("active", item === button);
+
+        });
+
+        refreshTasks();
+
+      });
+
+    });
+
+
+    taskList.addEventListener("click", function(event) {
+
+      const button = event.target.closest(".complete-button");
+      if (!button || button.disabled) return;
+
+      const card = button.closest(".task-card");
+      card.dataset.status = "completed";
+      card.querySelector(".status").textContent = "Completed";
+      card.querySelector(".status").className = "status completed";
+      button.textContent = "Completed ✓";
+      button.disabled = true;
+      refreshTasks();
+    });
+    
+
+    document.getElementById("add-task").addEventListener("click", function() {
+
+      const title = window.prompt("What task would you like to add?");
+      if (!title || !title.trim()) return;
+
+      const card = document.createElement("article");
+      card.className = "task-card";
+      card.dataset.status = "pending";
+
+      const top = document.createElement("div"); 
+      top.className = "task-card-top";
+
+      const category = document.createElement("span"); 
+      category.className = "task-category"; 
+      category.textContent = "PERSONAL";
+
+      const status = document.createElement("span"); 
+      status.className = "status pending"; 
+      status.textContent = "To do";
+      top.append(category, status);
+
+      const heading = document.createElement("h2"); 
+      heading.textContent = title.trim();
+
+      const description = document.createElement("p"); 
+      description.textContent = "A new task to work on at your own pace.";
+
+      const bottom = document.createElement("div"); 
+      bottom.className = "task-card-bottom";
+
+      const date = document.createElement("span"); 
+      date.className = "task-date"; date.textContent = "Just added";
+
+      const complete = document.createElement("button"); 
+      complete.type = "button"; 
+      complete.className = "complete-button"; 
+      complete.textContent = "Mark complete";
+      bottom.append(date, complete); 
+      card.append(top, heading, description, bottom); 
+      taskList.prepend(card);
+      activeFilter = "all";
+
+      document.querySelectorAll(".filter-button").forEach(function(item) 
+      { 
+        item.classList.toggle("active", item.dataset.filter === "all");
+       });
+
+
+      refreshTasks();
+    });
+
+    refreshTasks();
+
+  </script>
+
+</body>
+
+
+</html>

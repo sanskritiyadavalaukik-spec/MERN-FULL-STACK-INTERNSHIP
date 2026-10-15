@@ -2,155 +2,161 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Log in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4b287d">
+  <title>Login</title>
   <link rel="stylesheet" href="style.css">
+
 </head>
 
-<body>
-  <main class="auth-card">
-  
-    <section id="view-login" class="view" data-title="Log in" aria-labelledby="login-heading">
-      <h1 >Login</h1>     
+<body class="auth-page">
 
-      <form data-form="login" novalidate>        
+  <main class="auth-shell">
+
+    
+
+    <div class="auth-main">
+      <section id="view-login" class="view" aria-labelledby="login-heading">
+        <h1 id="login-heading">Welcome back</h1>
+        <p class="auth-intro">Sign in to pick up where you left off.</p>
+        <form data-form="login" novalidate>
 
           <div class="field">
-            <label for="login-email">Email</label>
-            <input class="form-input" id="login-email" name="email" type="email" required
-                   autocomplete="email" aria-describedby="login-email-error" aria-invalid="false">
+            <label for="login-email">Email address</label>
+            <input class="form-input" id="login-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="login-email-error" aria-invalid="false">
             <p id="login-email-error" class="error" aria-live="polite"></p>
           </div>
 
           <div class="field">
             <label for="login-password">Password</label>
-            <input class="form-input" id="login-password" name="password" type="password" required
-                   autocomplete="current-password" aria-describedby="login-password-error" aria-invalid="false">
+            <input class="form-input" id="login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required aria-describedby="login-password-error" aria-invalid="false">
             <p id="login-password-error" class="error" aria-live="polite"></p>
           </div>
-        <label>
 
-            <input class="remember-box" type="checkbox">
-            Remember me
-        </label>
+          <label class="remember-row">
+            <input class="remember-box" type="checkbox" name="remember"> Remember me</label>
 
-        <button type="submit" class="btn">Sign in</button>
-        <p class="success" role="status" hidden></p>
-      </form>
+          <button type="submit" class="btn">Sign in</button>
 
-      <p class="switch-page">Don't have an account? <a href="#" id="show-register" >Register</a></p>
+          <p class="success" role="status" hidden></p>
 
-    </section>
-
-    <section id="view-registration"class="view hidden">
-       <h1>Registration</h1>
-        <form data-form="registration" novalidate>
-            <div class="field">
-                <label for="first-name">First Name</label>
-                <input
-                 class="form-input"
-                 id="first-name"
-                 name="firstName"
-                 type="text"
-                 placeholder="Enter your first name"
-                 required
-                 >
-            </div>
-
-            <div class="field">
-                <label for="last-name">Last Name</label>
-                <input
-                  class="form-input"
-                  id="last-name"
-                  name="lastName"
-                  type="text"
-                  placeholder="Enter your last name"
-                  required
-                  >
-            </div>
-
-            <div class="field">
-                <label for="date-of-birth">Date of Birth</label>
-                <input
-                class="form-input"
-                id="date-of-birth"
-                name="dateOfBirth"
-                type="date"
-                required
-                >
-
-            </div>
-
-            <div class="field">
-                <label>Gender</label>
-                <label>
-                    <input type="radio"name="gender"value="male"required>
-                    Male
-                </label>
-
-                <label>
-                    <input type="radio"name="gender"value="female"required>
-                    Female
-                </label>
-
-                <label>
-                    <input type="radio"name="gender"value="other"required>
-                    Other
-                </label>
-            </div>
-
-            <div class="field">
-                <label for="reg-email">Email</label>
-                <input
-                  class="form-input"
-                  id="reg-email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  required
-                  aria-describedby="reg-email-error"
-                  >
-                  <p id="reg-email-error" class="error" aria-live="polite"></p>
-            </div>
-
-            <div class="field">
-                    <label for="reg-password">Password</label>
-                    <input
-                      class="form-input"
-                      id="reg-password"
-                      name="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      required
-                      aria-describedby="reg-password-error"
-                      >
-                      <p id="reg-password-error" class=aria-live="polite"></p>
-                  </div>
-
-                  <div class="field">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input
-                      class="form-input"
-                      id="confirm-password"
-                      name="confirm-password"
-                      type="password"
-                      placeholder="Confirm your password"
-                      required
-                      aria-describedby="confirm-password-error"
-                      >
-                      <p id="confirm-password-error" class="error" aria-live="polite"></p>
-                  </div>
-
-                  <button type="submit"class="btn">Register</button>
         </form>
-        <p class="switch-page">
-            Already have an account?
-            <a href="#" id="show-login">Login</a>
-        </p>
-    </section>
 
+        <p class="switch-page">New here? <a href="#register" id="show-register">Create an account</a></p>
+      </section>
+
+
+      <section id="view-registration" class="view hidden" aria-labelledby="registration-heading">
+        <h1 id="registration-heading">Create your account</h1>
+        <p class="auth-intro">A few details and you're ready to get started.</p>
+        <form data-form="registration" novalidate>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="first-name">First name</label>
+              <input class="form-input" id="first-name" name="firstName" type="text" placeholder="First name" autocomplete="given-name" required>
+            </div>
+
+
+            <div class="field">
+              <label for="last-name">Last name</label>
+              <input class="form-input" id="last-name" name="lastName" type="text" placeholder="Last name" autocomplete="family-name" required>
+            </div>
+
+          </div>
+
+
+          <div class="form-row">
+            <div class="field">
+              <label for="date-of-birth">Date of birth</label>
+              <input class="form-input" id="date-of-birth" name="dateOfBirth" type="date" required>
+            </div>
+
+
+            <div class="field">
+              <span class="field-label">Gender</span>
+              <div class="radio-options">
+                <label>
+                  <input type="radio" name="gender" value="male" required>
+                   Male
+                  </label>
+
+                <input type="radio" name="gender" value="female">
+                 Female
+                </label>
+
+                <label>
+                  <input type="radio" name="gender" value="other">
+                   Other
+                  </label>
+                </div>
+              </div>
+
+
+          </div>
+          <div class="field">
+            <label for="reg-email">Email address</label>
+            <input class="form-input" 
+            id="reg-email" name="email" 
+            type="email" 
+            placeholder="you@example.com" 
+            autocomplete="email" 
+            required 
+            aria-describedby="reg-email-error" 
+            aria-invalid="false"
+            >
+
+            <p id="reg-email-error" class="error" aria-live="polite"></p>
+
+          </div>
+
+
+          <div class="field">
+            <label for="reg-password">Password</label>
+            <input class="form-input" 
+            id="reg-password" 
+            name="password" 
+            type="password" 
+            placeholder="At least 6 characters" 
+            autocomplete="new-password"
+            required 
+            aria-describedby="reg-password-error" 
+            aria-invalid="false"
+            >
+            
+            <p id="reg-password-error" class="error" aria-live="polite"></p>
+          
+          </div>
+
+
+          <div class="field">
+            <label for="confirm-password">
+              Confirm password
+            </label>
+            
+            <input class="form-input" 
+            id="confirm-password"
+            name="confirm-password" 
+            type="password" 
+            placeholder="Enter it one more time" 
+            autocomplete="new-password" 
+            required 
+            aria-describedby="confirm-password-error" 
+            aria-invalid="false">
+            
+            <p id="confirm-password-error" class="error" aria-live="polite"></p>
+          
+          </div>
+
+
+          <button type="submit" class="btn">Create account</button>
+          <p class="success" role="status" hidden></p>
+
+        </form>
+        <p class="switch-page">Already have an account? <a href="#login" id="show-login">Sign in</a></p>
+      </section>
+    </div>
   </main>
   <script src="script.js"></script>
-   
 </body>
 </html>
