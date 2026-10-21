@@ -162,132 +162,268 @@
 
       <p class="empty-state" id="empty-state" hidden>
         No tasks in this view. Try another filter or add a new task.</p>
-      <footer class="page-footer">
-        Studio Space 
-        <span>·</span> 
-        A workspace for steady progress
-      </footer>
+     
 
     </main>
 
   </div>
 
+
+    <!-- Day 7 modal HTML -->
+  <div class="modal-overlay" id="task-modal" hidden>
+    <div class="task-modal" role="dialog"
+         aria-modal="true" aria-labelledby="modal-title">
+
+      <div class="modal-header">
+        <h2 id="modal-title">Add New Task</h2>
+        <button type="button" id="close-modal"
+                class="close-modal" aria-label="Close modal">
+          &times;
+        </button>
+      </div>
+
+      <form id="task-form">
+        <div class="form-group">
+          <label for="task-title">Task Title</label>
+          <input type="text" id="task-title" name="title"
+                 placeholder="Enter task title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="task-description">Description</label>
+          <textarea id="task-description" name="description"
+                    rows="4" placeholder="Describe your task"
+                    required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancel-modal"
+                  class="cancel-button">Cancel</button>
+          <button type="submit" class="save-button">Save Task</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
   <script>
-    const taskList = document.getElementById("task-list");
+   
+const taskList = document.getElementById("task-list");
+const taskCount = document.getElementById("task-count");
+const emptyState = document.getElementById("empty-state");
 
-    const taskCount = document.getElementById("task-count");
+const taskModal = document.getElementById("task-modal");
+const taskForm = document.getElementById("task-form");
+const taskTitle = document.getElementById("task-title");
+const taskDescription = document.getElementById("task-description");
 
-    const emptyState = document.getElementById("empty-state");
+const closeModalButton = document.getElementById("close-modal");
+const cancelModalButton = document.getElementById("cancel-modal");
 
-    let activeFilter = "all";
+let activeFilter = "all";
 
+// Our task data
+let tasks = [
+  {
+    id: 1,
+    title: "Complete Day 6 UI",
+    description: "Create a task list page using HTML and CSS.",
+    status: "pending",
+    category: "INTERNSHIP",
+    date: "Focus task"
+  },
+  {
+    id: 2,
+    title: "Review CSS Grid",
+    description: "Practise arranging cards in a clean, responsive layout.",
+    status: "completed",
+    category: "LEARNING",
+    date: "Practice"
+  },
+  {
+    id: 3,
+    title: "Update GitHub repository",
+    description: "Review the finished interface before sharing the project.",
+    status: "pending",
+    category: "PROJECT",
+    date: "Project upkeep"
+  }
+];
 
+// Display tasks on the page
+function renderTasks() {
+  taskList.innerHTML = "";
 
-    function refreshTasks() {
+  let visibleCount = 0;
 
-      const cards = Array.from(taskList.querySelectorAll(".task-card"));
+  tasks.forEach(function(task) {
+    const card = document.createElement("article");
+    card.className = "task-card";
+    card.dataset.status = task.status;
 
-      let visibleCount = 0;
+    const top = document.createElement("div");
+    top.className = "task-card-top";
 
-      cards.forEach(function(card) {
+    const category = document.createElement("span");
+    category.className = "task-category";
+    category.textContent = task.category;
 
-        const show = activeFilter === "all" || card.dataset.status === activeFilter;
-        card.hidden = !show;
+    const status = document.createElement("span");
+    status.className = "status " + task.status;
+    status.textContent =
+      task.status === "completed" ? "Completed" : "To do";
 
-        if (show) visibleCount++;
-      });
+    top.append(category, status);
 
+    const heading = document.createElement("h2");
+    heading.textContent = task.title;
 
-      taskCount.textContent = cards.length + (cards.length === 1 ? " task" : " tasks");
-      emptyState.hidden = visibleCount !== 0;
+    const description = document.createElement("p");
+    description.textContent = task.description;
+
+    const bottom = document.createElement("div");
+    bottom.className = "task-card-bottom";
+
+    const date = document.createElement("span");
+    date.className = "task-date";
+    date.textContent = task.date;
+
+    const completeButton = document.createElement("button");
+    completeButton.type = "button";
+    completeButton.className = "complete-button";
+
+    if (task.status === "completed") {
+      completeButton.textContent = "Completed ✓";
+      completeButton.disabled = true;
+    } else {
+      completeButton.textContent = "Mark complete";
     }
 
-    document.querySelectorAll(".filter-button").forEach(function(button) {
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "delete-button";
+    deleteButton.textContent = "Delete";
+    deleteButton.dataset.id = task.id;
 
-      button.addEventListener("click", function() {
+    bottom.append(date, completeButton, deleteButton);
+    card.append(top, heading, description, bottom);
 
-        activeFilter = button.dataset.filter;
+    const showTask =
+      activeFilter === "all" || task.status === activeFilter;
 
-        document.querySelectorAll(".filter-button").forEach(function(item) {
+    card.hidden = !showTask;
 
-          item.classList.toggle("active", item === button);
+    if (showTask) {
+      visibleCount++;
+    }
 
-        });
+    taskList.appendChild(card);
+  });
 
-        refreshTasks();
+  taskCount.textContent =
+    tasks.length + (tasks.length === 1 ? " task" : " tasks");
 
-      });
+  emptyState.hidden = visibleCount !== 0;
+}
 
+// Filter tasks
+document.querySelectorAll(".filter-button").forEach(function(button) {
+  button.addEventListener("click", function() {
+    activeFilter = button.dataset.filter;
+
+    document.querySelectorAll(".filter-button").forEach(function(item) {
+      item.classList.toggle("active", item === button);
     });
 
+    renderTasks();
+  });
+});
 
-    taskList.addEventListener("click", function(event) {
+// Handle completion and deletion
+taskList.addEventListener("click", function(event) {
+  const card = event.target.closest(".task-card");
 
-      const button = event.target.closest(".complete-button");
-      if (!button || button.disabled) return;
+  if (!card) return;
 
-      const card = button.closest(".task-card");
-      card.dataset.status = "completed";
-      card.querySelector(".status").textContent = "Completed";
-      card.querySelector(".status").className = "status completed";
-      button.textContent = "Completed ✓";
-      button.disabled = true;
-      refreshTasks();
-    });
-    
+  const cards = Array.from(taskList.children);
+  const index = cards.indexOf(card);
 
-    document.getElementById("add-task").addEventListener("click", function() {
+  // Find the matching task using its position in the rendered list
+  const task = tasks[index];
 
-      const title = window.prompt("What task would you like to add?");
-      if (!title || !title.trim()) return;
+  if (!task) return;
 
-      const card = document.createElement("article");
-      card.className = "task-card";
-      card.dataset.status = "pending";
+  if (event.target.closest(".complete-button")) {
+    if (task.status === "pending") {
+      task.status = "completed";
+      renderTasks();
+    }
+  }
 
-      const top = document.createElement("div"); 
-      top.className = "task-card-top";
-
-      const category = document.createElement("span"); 
-      category.className = "task-category"; 
-      category.textContent = "PERSONAL";
-
-      const status = document.createElement("span"); 
-      status.className = "status pending"; 
-      status.textContent = "To do";
-      top.append(category, status);
-
-      const heading = document.createElement("h2"); 
-      heading.textContent = title.trim();
-
-      const description = document.createElement("p"); 
-      description.textContent = "A new task to work on at your own pace.";
-
-      const bottom = document.createElement("div"); 
-      bottom.className = "task-card-bottom";
-
-      const date = document.createElement("span"); 
-      date.className = "task-date"; date.textContent = "Just added";
-
-      const complete = document.createElement("button"); 
-      complete.type = "button"; 
-      complete.className = "complete-button"; 
-      complete.textContent = "Mark complete";
-      bottom.append(date, complete); 
-      card.append(top, heading, description, bottom); 
-      taskList.prepend(card);
-      activeFilter = "all";
-
-      document.querySelectorAll(".filter-button").forEach(function(item) 
-      { 
-        item.classList.toggle("active", item.dataset.filter === "all");
-       });
-
-
-      refreshTasks();
+  if (event.target.closest(".delete-button")) {
+    tasks = tasks.filter(function(item) {
+      return item.id !== Number(event.target.closest(".delete-button").dataset.id);
     });
 
-    refreshTasks();
+    renderTasks();
+  }
+});
+
+// Open and close the modal
+function openModal() {
+  taskModal.hidden = false;
+  taskTitle.focus();
+}
+
+function closeModal() {
+  taskModal.hidden = true;
+  taskForm.reset();
+}
+
+document.getElementById("add-task").addEventListener("click", openModal);
+
+closeModalButton.addEventListener("click", closeModal);
+cancelModalButton.addEventListener("click", closeModal);
+
+taskModal.addEventListener("click", function(event) {
+  if (event.target === taskModal) {
+    closeModal();
+  }
+});
+
+// Add a new task
+taskForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const title = taskTitle.value.trim();
+  const description = taskDescription.value.trim();
+
+  if (!title || !description) return;
+
+  const newTask = {
+    id: Date.now(),
+    title: title,
+    description: description,
+    status: "pending",
+    category: "PERSONAL",
+    date: "Just added"
+  };
+
+  tasks.push(newTask);
+
+  activeFilter = "all";
+
+  document.querySelectorAll(".filter-button").forEach(function(button) {
+    button.classList.toggle("active", button.dataset.filter === "all");
+  });
+
+  renderTasks();
+  closeModal();
+});
+
+// Show the initial tasks
+renderTasks();
+
 
   </script>
 

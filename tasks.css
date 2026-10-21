@@ -499,3 +499,150 @@ a:focus-visible{
         flex:1
     }
 }
+
+
+/* Day 7: Modal styling */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(40, 20, 40, 0.55);
+  box-sizing: border-box;
+}
+
+.modal-overlay[hidden] {
+  display: none !important;
+}
+
+.task-modal {
+  width: 100%;
+  max-width: 450px;
+  padding: 25px;
+  background: #ffffff;
+  border: 1px solid #f06292;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(90, 30, 60, 0.2);
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #ad1457;
+  font-size: 23px;
+}
+
+.close-modal {
+  border: none;
+  background: transparent;
+  color: #ad1457;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  color: #ad1457;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #f0b6d0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #212121;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 2px solid #f06292;
+  outline-offset: 1px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cancel-button,
+.save-button {
+  padding: 11px 18px;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-button {
+  color: #ad1457;
+  background: #ffffff;
+  border: 1px solid #f06292;
+}
+
+.save-button {
+  color: #ffffff;
+  background: #ff4081;
+  border: 1px solid #ff4081;
+}
+
+.cancel-button:hover {
+  background: #fce7f3;
+}
+
+.save-button:hover {
+  background: #ad1457;
+}
+
+@media (max-width: 480px) {
+  .task-modal {
+    padding: 20px;
+  }
+
+  .modal-actions button {
+    flex: 1;
+  }
+}
+
+
+.delete-button {
+  background: #fce7f3;
+  color: #ad1457;
+  border: 1px solid #f06292;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.delete-button:hover {
+  background: #f8bbd0;
+}
