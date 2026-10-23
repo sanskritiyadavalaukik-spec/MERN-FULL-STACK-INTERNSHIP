@@ -41,7 +41,7 @@
           <br>'
           <strong>Progress adds up.</strong>
         </p>
-        <a href="loginpage.html" class="logout">↗ Sign out</a>
+        <a href="loginpage.html" class="logout">↗ Logout</a>
       
       </div>
 
@@ -207,6 +207,10 @@
   </div>
 
   <script>
+
+    if(sessionStorage.getItem("isLoggedIn") != "true") {
+      window.location.replace("loginpage.html");
+    }
    
 const taskList = document.getElementById("task-list");
 const taskCount = document.getElementById("task-count");

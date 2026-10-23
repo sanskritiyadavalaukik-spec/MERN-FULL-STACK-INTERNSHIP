@@ -62,9 +62,9 @@ if (loginForm) {
       isValid = false;
     }
 
-    if (isValid && success) {
-      success.textContent = "Your fields look good. Account sign-in needs a connected backend.";
-      success.hidden = false;
+    if (isValid) {
+      sessionStorage.setItem("isLoggedIn", "true");
+      window.location.href = "dashboard.html";
     }
   });
 }
@@ -100,9 +100,9 @@ document.querySelectorAll('[data-form="registration"]').forEach(function (form) 
       isValid = false;
     }
 
-    if (isValid && success) {
-      success.textContent = "Your fields look good. Creating an account needs a connected backend.";
-      success.hidden = false;
+    if (isValid) {
+      sessionStorage.setItem("isLoggedIn", "true");
+      window.location.href = "dashboard.html";
     }
 
   });

@@ -34,7 +34,7 @@
 
       <div class="sidebar-bottom">
         
-        <a href="loginpage.html" class="logout">↗ Sign out</a>
+        <a href="loginpage.html" class="logout" id="logout-link">↗ Logout</a>
       </div>
 
     </aside>
@@ -130,6 +130,16 @@
   </div>
 
   <script>
+    if(sessionStorage.getItem("isLoggedIn") !== "true") {
+      window.location.replace("loginpage.html");
+    }
+
+    window.addEventListener("pageshow", function() {
+      if (sessionStorage.getItem("isLoggedIn") !== "true") {
+        window.location.replace("loginpage.html");
+      }
+    });
+
       const STORAGE_KEY = "pinkTaskManagerTasks";
 
   function updateDashboard() {
@@ -174,6 +184,13 @@
   }
 
   updateDashboard();
+
+  const logoutLink = document.getElementById("logout-link");
+
+  if(logoutLink) {
+    logoutLink.addEventListener("click", function() { sessionStorage.removeItem("isLoggedIn");
+    });
+  }
   </script>
 
 </body>
