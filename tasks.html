@@ -223,7 +223,10 @@ const cancelModalButton = document.getElementById("cancel-modal");
 let activeFilter = "all";
 
 // Our task data
-let tasks = [
+
+const STORAGE_KEY = "pinkTaskManagerTasks";
+
+const defaultTasks = [
   {
     id: 1,
     title: "Complete Day 6 UI",
@@ -249,6 +252,27 @@ let tasks = [
     date: "Project upkeep"
   }
 ];
+
+function loadTasks() {
+  const savedTasks = localStorage.getItem(STORAGE_KEY);
+
+  if (savedTasks !== null) {
+    try {
+      return JSON.parse(savedTasks);
+    } catch (error) {
+      console.log("Could not load saved tasks.");
+    }
+  }
+
+  return defaultTasks;
+}
+
+let tasks = loadTasks();
+
+function saveTasks() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+}
+
 
 // Display tasks on the page
 function renderTasks() {
@@ -356,6 +380,7 @@ taskList.addEventListener("click", function(event) {
   if (event.target.closest(".complete-button")) {
     if (task.status === "pending") {
       task.status = "completed";
+      saveTasks();
       renderTasks();
     }
   }
@@ -365,6 +390,8 @@ taskList.addEventListener("click", function(event) {
       return item.id !== Number(event.target.closest(".delete-button").dataset.id);
     });
 
+    
+    saveTasks();
     renderTasks();
   }
 });
@@ -395,12 +422,12 @@ taskModal.addEventListener("click", function(event) {
 taskForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
-  const title = taskTitle.value.trim();
+  const title  = taskTitle.value.trim();
   const description = taskDescription.value.trim();
 
-  if (!title || !description) return;
-
-  const newTask = {
+  if(!title || !description) {
+    return;
+  }const newTask = {
     id: Date.now(),
     title: title,
     description: description,
@@ -411,6 +438,8 @@ taskForm.addEventListener("submit", function(event) {
 
   tasks.push(newTask);
 
+  saveTasks();
+
   activeFilter = "all";
 
   document.querySelectorAll(".filter-button").forEach(function(button) {
@@ -418,7 +447,7 @@ taskForm.addEventListener("submit", function(event) {
   });
 
   renderTasks();
-  closeModal();
+  closeModal(); 
 });
 
 // Show the initial tasks

@@ -66,7 +66,7 @@
             <span class="stat-label">ALL TASKS</span>
           </div>
           
-          <p class="stat-number">12</p>
+          <p class="stat-number " id="total-tasks">0</p>
           <p class="stat-caption">Tasks in your workspace</p>
         </article>
 
@@ -76,7 +76,7 @@
             <span class="stat-label">COMPLETED</span>
           </div>
           
-          <p class="stat-number">8</p>
+          <p class="stat-number" id="completed-tasks"></p>
           <p class="stat-caption">Nice work — keep it up</p>
         </article>
 
@@ -86,7 +86,7 @@
             <span class="stat-label">IN PROGRESS</span>
           </div>
           
-          <p class="stat-number">4</p>
+          <p class="stat-number" id="pending-tasks">0</p>
           <p class="stat-caption">One step at a time</p>
         </article>
 
@@ -100,19 +100,18 @@
             <p class="eyebrow">YOUR MOMENTUM</p>
             <h2>Overall progress</h2>
           </div>
-          <span class="progress-value">67%</span>
+          <span class="progress-value" id="progress-value">0%</span>
         </div>
 
         <div class="progress-track" 
         role="progressbar" 
         aria-label="Overall task progress" 
-        aria-valuenow="67" 
+        aria-valuenow="0" 
         aria-valuemin="0" 
         aria-valuemax="100">
-        <span></span>
+        <span id="progress-bar"></span>
       </div>
-      <p class="panel-note">8 of 12 tasks completed. You're building a good rhythm.</p>
-    </article>
+      <p class="panel-note" id="progress-note"></p>
 
         <article class="panel next-panel">
           <p class="eyebrow">UP NEXT</p>
@@ -129,6 +128,53 @@
     </main>
     
   </div>
+
+  <script>
+      const STORAGE_KEY = "pinkTaskManagerTasks";
+
+  function updateDashboard() {
+    const savedTasks = localStorage.getItem(STORAGE_KEY);
+    let tasks = [];
+
+    if (savedTasks !== null) {
+      try {
+        tasks = JSON.parse(savedTasks);
+        if (!Array.isArray(tasks)) tasks = [];
+      } catch (error) {
+        tasks = [];
+      }
+    }
+
+    const total = tasks.length;
+
+    const completed = tasks.filter(function(task) {
+      return task.status === "completed";
+    }).length;
+
+    const pending = total - completed;
+    const progress = total === 0
+      ? 0
+      : Math.round((completed / total) * 100);
+
+    document.getElementById("total-tasks").textContent = total;
+    document.getElementById("completed-tasks").textContent = completed;
+    document.getElementById("pending-tasks").textContent = pending;
+
+    document.getElementById("progress-value").textContent =
+      progress + "%";
+
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.width = progress + "%";
+
+    const progressTrack = document.querySelector(".progress-track");
+    progressTrack.setAttribute("aria-valuenow", progress);
+
+    document.getElementById("progress-note").textContent =
+      completed + " of " + total + " tasks completed. Keep it up!";
+  }
+
+  updateDashboard();
+  </script>
 
 </body>
 

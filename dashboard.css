@@ -294,11 +294,13 @@ a{
     }
     
     .progress-track{
-        height:10px;
+        height:12px;
         margin:25px 0 14px;
-        background:linear-gradient(90deg, #ff4081, #f06292);
-        border-radius:99px;
-        overflow:hidden
+        background:#ffffff;
+        border: 1px solid #f06292;
+        border-radius: 99px;
+        overflow:hidden;
+        box-sizing: border-box;
     }
     
     .progress-track span{
