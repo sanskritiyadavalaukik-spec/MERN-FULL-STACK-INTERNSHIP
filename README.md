@@ -39,10 +39,6 @@ I created a basic server using Node.js and Express.js and tested it on port 5000
 ### Day 12 – Express Routing
 I created GET routes to show a welcome message and a list of tasks. I also created a POST route to add new tasks and used middleware to check request details in the terminal. I tested these routes using PowerShell.
 
-### Day 13 – Project Structure and Middleware
-I organized my backend code by keeping routes and controllers in separate files. I also used middleware to check request details and tested the GET and POST APIs using Postman.
-
-
 ## Technologies Used
 
 - HTML
