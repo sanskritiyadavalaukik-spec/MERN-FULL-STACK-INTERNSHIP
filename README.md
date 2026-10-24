@@ -25,7 +25,7 @@ I added validation to check the email, password length and whether both password
 I created a dashboard with a sidebar, navigation links and statistics cards.
 
 ### Day 7 – Task Creation Modal
-I created a popup form to add a task with a title and description. I also added Save and Cancel buttons.
+I created a popup form to add a task with a title and description. I also added Save and Delete buttons.
 
 ### Day 8 – Dynamic Task Management
 I used JavaScript to add and delete tasks dynamically and manage their status.
@@ -46,7 +46,6 @@ I created GET routes to show a welcome message and a list of tasks. I also creat
 - JavaScript
 - Node.js
 - Express.js
-- Git and GitHub
 
 ## How to Run the Backend
 
